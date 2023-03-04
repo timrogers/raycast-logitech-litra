@@ -11,7 +11,7 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "index",
+      "name": "manage-devices",
       "title": "Manage Devices",
       "description": "Turn your Logitech Litra devices on or off",
       "mode": "view"
