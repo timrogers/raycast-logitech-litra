@@ -13,7 +13,22 @@
     {
       "name": "manage-devices",
       "title": "Manage Devices",
-      "description": "Turn your Logitech Litra devices on or off",
+      "subtitle": "Turn on and off, and set brightness and temperature",
+      "description": "Turn your Logitech Litra devices on or off, and set their brightness and temperature",
+      "mode": "view"
+    },
+    {
+      "name": "manage-temperature-presets",
+      "title": "Manage Temperature Presets",
+      "subtitle": "Set up presets for your Litra devices' temperature",
+      "description": "Configure presets so you can manage your Litra devices' temperature from Raycast",
+      "mode": "view"
+    },
+    {
+      "name": "manage-brightness-presets",
+      "title": "Manage Brightness Presets",
+      "subtitle": "Set up presets for your Litra devices' brightness",
+      "description": "Configure presets so you can manage your Litra devices' brightness from Raycast",
       "mode": "view"
     }
   ],
