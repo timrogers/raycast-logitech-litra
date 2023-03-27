@@ -45,7 +45,7 @@
     "@raycast/api": "^1.48.9"
   },
   "devDependencies": {
-    "@types/node": "18.15.3",
+    "@types/node": "18.15.10",
     "@types/react": "18.0.28",
     "@typescript-eslint/eslint-plugin": "^5.56.0",
     "@typescript-eslint/parser": "^5.56.0",
