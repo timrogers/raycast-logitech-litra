@@ -9,6 +9,7 @@ const exec = promisify(defaultExec);
 interface Device {
   name: string;
   serial_number: string;
+  is_on: boolean;
 }
 
 const MINIMUM_SUPPORTED_LITRA_VERSION = "4.4.0";
@@ -62,12 +63,14 @@ export const getDevices = async (cliDirectory: string): Promise<Device[]> => {
   return JSON.parse(stdout) as Device[];
 };
 
-export const turnOn = async (cliDirectory: string, serialNumber: string): Promise<void> => {
-  await runLitraCommand(cliDirectory, "litra-on", `--serial-number ${serialNumber}`);
+export const isOn = async (cliDirectory: string, serialNumber: string): Promise<boolean> => {
+  const devices = await getDevices(cliDirectory);
+  const device = devices.find((device) => device.serial_number === serialNumber) as Device;
+  return device.is_on;
 };
 
-export const turnOff = async (cliDirectory: string, serialNumber: string): Promise<void> => {
-  await runLitraCommand(cliDirectory, "litra-off", `--serial-number ${serialNumber}`);
+export const toggle = async (cliDirectory: string, serialNumber: string): Promise<void> => {
+  await runLitraCommand(cliDirectory, "litra-toggle", `--serial-number ${serialNumber}`);
 };
 
 export const setTemperatureInKelvin = async (

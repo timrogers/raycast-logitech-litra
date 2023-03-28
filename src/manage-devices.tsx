@@ -1,14 +1,7 @@
 import { ActionPanel, Action, Icon, List, showToast, Toast } from "@raycast/api";
 import React, { useEffect, useState } from "react";
 import { getCliDirectory } from "./preferences";
-import {
-  getDevices,
-  turnOff,
-  turnOn,
-  setTemperatureInKelvin,
-  setBrightnessPercentage,
-  checkLitraVersion,
-} from "./utils";
+import { getDevices, toggle, isOn, setTemperatureInKelvin, setBrightnessPercentage, checkLitraVersion } from "./utils";
 import { getEnabledTemperaturePresets } from "./temperature-presets";
 import { getEnabledBrightnessPresets } from "./brightness-presets";
 
@@ -57,19 +50,17 @@ export default function Command() {
           actions={
             <ActionPanel>
               <Action
-                title="Turn On"
+                title="Toggle"
                 icon={Icon.LightBulb}
                 onAction={async () => {
-                  await turnOn(cliDirectory, device.serial_number);
-                  await showToast({ title: `Turned on ${device.name}`, style: Toast.Style.Success });
-                }}
-              />
-              <Action
-                title="Turn Off"
-                icon={Icon.LightBulbOff}
-                onAction={async () => {
-                  await turnOff(cliDirectory, device.serial_number);
-                  await showToast({ title: `Turned off ${device.name}`, style: Toast.Style.Success });
+                  await toggle(cliDirectory, device.serial_number);
+                  const isDeviceOn = await isOn(cliDirectory, device.serial_number);
+
+                  if (isDeviceOn) {
+                    await showToast({ title: `Turned on ${device.name}`, style: Toast.Style.Success });
+                  } else {
+                    await showToast({ title: `Turned off ${device.name}`, style: Toast.Style.Success });
+                  }
                 }}
               />
               {Array.from(enabledTemperaturePresets).map((temperature) => (
