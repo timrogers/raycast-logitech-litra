@@ -1,7 +1,14 @@
 import { ActionPanel, Action, Icon, List, showToast, Toast } from "@raycast/api";
 import React, { useEffect, useState } from "react";
 import { getCliDirectory } from "./preferences";
-import { getDevices, turnOff, turnOn, setTemperatureInKelvin, setBrightnessPercentage } from "./utils";
+import {
+  getDevices,
+  turnOff,
+  turnOn,
+  setTemperatureInKelvin,
+  setBrightnessPercentage,
+  checkLitraVersion,
+} from "./utils";
 import { getEnabledTemperaturePresets } from "./temperature-presets";
 import { getEnabledBrightnessPresets } from "./brightness-presets";
 
@@ -19,6 +26,8 @@ export default function Command() {
 
   useEffect(() => {
     (async () => {
+      await checkLitraVersion(cliDirectory);
+
       const devices = await getDevices(cliDirectory);
       setDevices(devices);
     })();
