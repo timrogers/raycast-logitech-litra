@@ -47,8 +47,6 @@ export default function Command() {
     })();
   }, []);
 
-  console.log({ enabledTemperaturePresets, enabledBrightnessPresets });
-
   return (
     <List isLoading={false}>
       {devices.map((device) => (
