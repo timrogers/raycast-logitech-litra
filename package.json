@@ -43,7 +43,7 @@
   ],
   "dependencies": {
     "@raycast/api": "^1.48.9",
-    "semver": "^7.3.8"
+    "semver": "^7.5.0"
   },
   "devDependencies": {
     "@types/node": "18.15.11",
