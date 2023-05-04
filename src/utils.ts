@@ -27,8 +27,6 @@ export const checkLitraVersion = async (cliDirectory: string): Promise<void> => 
 };
 
 const getLitraVersion = async (cliDirectory: string): Promise<string> => {
-  const binPath = path.join(cliDirectory, "litra-devices");
-
   try {
     const { stdout: version } = await runLitraCommand(cliDirectory, "litra-devices", "--version");
     return version.trim();
