@@ -38,7 +38,7 @@
       "type": "textfield",
       "required": true,
       "title": "CLI directory",
-      "description": "The path to the directory where the executable files from the `litra` npm package are installed. Install the CLI with `npm install -g litra`, then run `dirname $(which litra-on)`."
+      "description": "The path to the directory where the executable files from the `litra` npm package are installed. Install the CLI with `npm install -g litra`, then run `dirname $(which litra-on)` in your shell to find the correct path."
     },
     {
       "name": "nodeBinaryPath",
