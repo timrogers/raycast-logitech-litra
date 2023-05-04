@@ -39,6 +39,13 @@
       "required": true,
       "title": "CLI directory",
       "description": "The path to the directory where the executable files from the `litra` npm package are installed. Install the CLI with `npm install -g litra`, then run `dirname $(which litra-on)`."
+    },
+    {
+      "name": "nodeBinaryPath",
+      "type": "textfield",
+      "required": false,
+      "title": "Node.js binary path",
+      "description": "The path to the Node.js binary. If not specified, the `node` binary in your `PATH` will be used. You should only specify this if you get an error like `env: node: No such file or directory` when trying to use the extension. You can get the correct path by running `which node` in your shell."
     }
   ],
   "dependencies": {
