@@ -1,8 +1,10 @@
 # Logitech Litra extension for Raycast
 
-This [Raycast](https://www.raycast.com/) extension allows you to manage your Logitech Litra Glow and/or Logitech Litra Beam light(s) from Raycast, turning them on and off and setting their brightness and temperature.
+This [Raycast](https://www.raycast.com/) extension allows you to manage your USB-connected Logitech Litra Glow and/or Logitech Litra Beam light(s) from Raycast, turning them on and off and setting their brightness and temperature.
 
 ![Screenshot](screenshot.png?raw=true)
+
+*Note*: This will not work with Logitech Litra Beam devices connected using Bluetooth.
 
 ## Installation
 

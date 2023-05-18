@@ -43,59 +43,67 @@ export default function Command() {
 
   return (
     <List isLoading={false}>
-      {devices.map((device) => (
-        <List.Item
-          key={device.serial_number}
-          title={device.name}
-          subtitle={device.serial_number}
-          actions={
-            <ActionPanel>
-              <Action
-                title="Toggle"
-                icon={Icon.LightBulb}
-                onAction={async () => {
-                  await toggle(cliDirectory, device.serial_number, nodeBinaryPath);
-                  const isDeviceOn = await isOn(cliDirectory, device.serial_number, nodeBinaryPath);
+      {devices.length ? (
+        devices.map((device) => (
+          <List.Item
+            key={device.serial_number}
+            title={device.name}
+            subtitle={device.serial_number}
+            actions={
+              <ActionPanel>
+                <Action
+                  title="Toggle"
+                  icon={Icon.LightBulb}
+                  onAction={async () => {
+                    await toggle(cliDirectory, device.serial_number, nodeBinaryPath);
+                    const isDeviceOn = await isOn(cliDirectory, device.serial_number, nodeBinaryPath);
 
-                  if (isDeviceOn) {
-                    await showToast({ title: `Turned on ${device.name}`, style: Toast.Style.Success });
-                  } else {
-                    await showToast({ title: `Turned off ${device.name}`, style: Toast.Style.Success });
-                  }
-                }}
-              />
-              {Array.from(enabledTemperaturePresets).map((temperature) => (
-                <Action
-                  key={temperature}
-                  title={`Set Temperature to ${temperature}K`}
-                  icon={Icon.Temperature}
-                  onAction={async () => {
-                    await setTemperatureInKelvin(cliDirectory, device.serial_number, temperature, nodeBinaryPath);
-                    await showToast({
-                      title: `Set ${device.name}'s temperature to ${temperature}K`,
-                      style: Toast.Style.Success,
-                    });
+                    if (isDeviceOn) {
+                      await showToast({ title: `Turned on ${device.name}`, style: Toast.Style.Success });
+                    } else {
+                      await showToast({ title: `Turned off ${device.name}`, style: Toast.Style.Success });
+                    }
                   }}
                 />
-              ))}
-              {Array.from(enabledBrightnessPresets).map((brightness) => (
-                <Action
-                  key={brightness}
-                  title={`Set Brightness to ${brightness}%`}
-                  icon={Icon.CircleProgress100}
-                  onAction={async () => {
-                    await setBrightnessPercentage(cliDirectory, device.serial_number, brightness, nodeBinaryPath);
-                    await showToast({
-                      title: `Set ${device.name}'s brightness to ${brightness}%`,
-                      style: Toast.Style.Success,
-                    });
-                  }}
-                />
-              ))}
-            </ActionPanel>
-          }
+                {Array.from(enabledTemperaturePresets).map((temperature) => (
+                  <Action
+                    key={temperature}
+                    title={`Set Temperature to ${temperature}K`}
+                    icon={Icon.Temperature}
+                    onAction={async () => {
+                      await setTemperatureInKelvin(cliDirectory, device.serial_number, temperature, nodeBinaryPath);
+                      await showToast({
+                        title: `Set ${device.name}'s temperature to ${temperature}K`,
+                        style: Toast.Style.Success,
+                      });
+                    }}
+                  />
+                ))}
+                {Array.from(enabledBrightnessPresets).map((brightness) => (
+                  <Action
+                    key={brightness}
+                    title={`Set Brightness to ${brightness}%`}
+                    icon={Icon.CircleProgress100}
+                    onAction={async () => {
+                      await setBrightnessPercentage(cliDirectory, device.serial_number, brightness, nodeBinaryPath);
+                      await showToast({
+                        title: `Set ${device.name}'s brightness to ${brightness}%`,
+                        style: Toast.Style.Success,
+                      });
+                    }}
+                  />
+                ))}
+              </ActionPanel>
+            }
+          />
+        ))
+      ) : (
+        <List.EmptyView
+          icon={Icon.ExclamationMark}
+          title="No devices found"
+          description="You don't seem to have any USB-connected Litra Glow or Litra Beam devices."
         />
-      ))}
+      )}
     </List>
   );
 }
