@@ -30,12 +30,13 @@ const getLitraVersion = async (cliDirectory: string, nodeBinaryPath?: string): P
   try {
     const { stdout: version } = await runLitraCommand(cliDirectory, "litra-devices", "--version", nodeBinaryPath);
     return version.trim();
-  } catch (error: any) {
-    if (error.stderr.includes("unknown option")) {
-      throw `You seem to be running an old version of the \`litra\` package. You must be running at least v${MINIMUM_SUPPORTED_LITRA_VERSION}. Please update by running \`npm install -g litra@${MINIMUM_SUPPORTED_LITRA_VERSION}\`.`;
-    } else {
-      throw error;
-    }
+  } catch (error: unknown) {
+    if (typeof error.stderr === "string")
+      if (error.stderr.includes("unknown option")) {
+        throw `You seem to be running an old version of the \`litra\` package. You must be running at least v${MINIMUM_SUPPORTED_LITRA_VERSION}. Please update by running \`npm install -g litra@${MINIMUM_SUPPORTED_LITRA_VERSION}\`.`;
+      } else {
+        throw error;
+      }
   }
 };
 
