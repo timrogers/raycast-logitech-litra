@@ -43,7 +43,7 @@ const runLitraCommand = (
   directory: string,
   filename: string,
   args?: string,
-  nodeBinaryPath?: string
+  nodeBinaryPath?: string,
 ): Promise<{
   stdout: string;
   stderr: string;
@@ -77,13 +77,13 @@ export const setTemperatureInKelvin = async (
   cliDirectory: string,
   serialNumber: string,
   temperatureInKelvin: number,
-  nodeBinaryPath?: string
+  nodeBinaryPath?: string,
 ): Promise<void> => {
   await runLitraCommand(
     cliDirectory,
     "litra-temperature-k",
     `${temperatureInKelvin} --serial-number ${serialNumber}`,
-    nodeBinaryPath
+    nodeBinaryPath,
   );
 };
 
@@ -91,12 +91,12 @@ export const setBrightnessPercentage = async (
   cliDirectory: string,
   serialNumber: string,
   brightnessPercentage: number,
-  nodeBinaryPath?: string
+  nodeBinaryPath?: string,
 ): Promise<void> => {
   await runLitraCommand(
     cliDirectory,
     "litra-brightness",
     `${brightnessPercentage} --serial-number ${serialNumber}`,
-    nodeBinaryPath
+    nodeBinaryPath,
   );
 };
