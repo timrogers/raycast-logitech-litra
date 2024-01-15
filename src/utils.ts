@@ -24,7 +24,7 @@ const getLitraVersion = async (binaryPath: string): Promise<string> => {
   const { stdout: version } = await runLitraCommand(binaryPath, undefined, "--version");
   // The CLI returns an output like this:
   // > litra 0.1.0
-  return version.trim().split(' ')[1];
+  return version.trim().split(" ")[1];
 };
 
 const runLitraCommand = (
@@ -63,11 +63,7 @@ export const setTemperatureInKelvin = async (
   temperatureInKelvin: number,
   binaryPath: string,
 ): Promise<void> => {
-  await runLitraCommand(
-    binaryPath,
-    "temperature",
-    `--value ${temperatureInKelvin} --serial-number ${serialNumber}`,
-  );
+  await runLitraCommand(binaryPath, "temperature", `--value ${temperatureInKelvin} --serial-number ${serialNumber}`);
 };
 
 export const setBrightnessPercentage = async (

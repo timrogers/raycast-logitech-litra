@@ -23,4 +23,4 @@ export const getNodeBinaryPath = (): string => {
 export const getLitraBinaryPath = (): string => {
   const { litraBinaryPath } = getPreferenceValues<Preferences>();
   return litraBinaryPath;
-}
+};
