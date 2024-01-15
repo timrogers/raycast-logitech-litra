@@ -1,5 +1,10 @@
 # Logitech Litra Changelog
 
+## [Switch to using the new and more reliable `litra` CLI under the hood] - 2024-01-15
+
+- __BREAKING CHANGE__: The extension now uses a [new `litra` CLI](https://github.com/timrogers/litra-rs), built in Rust, under the hood. No more painful problems with Node and npm! 🙏
+- Logitech Litra Beam LX devices are now supported, as well as the Litra Glow and Litra Beam ✨
+
 ## [Improve the UX when no Litra devices are found] - 2023-05-18
 
 - The extension now shows a helpful message if no connected Litra devices are found when using the "Manage Devices" command.
