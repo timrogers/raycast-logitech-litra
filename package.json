@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "logitech-litra",
   "title": "Logitech Litra",
-  "description": "Manage USB-connected Logitech Litra Glow and Logitech Litra Beam lights from Raycast",
+  "description": "Manage USB-connected Logitech Litra Glow, Litra Beam and Litra Beam LX lights from Raycast",
   "icon": "command-icon.png",
   "author": "timrogers",
   "categories": [
