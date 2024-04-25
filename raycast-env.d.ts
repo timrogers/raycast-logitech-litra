@@ -32,4 +32,3 @@ declare namespace Arguments {
   /** Arguments passed to the `manage-brightness-presets` command */
   export type ManageBrightnessPresets = {}
 }
-
