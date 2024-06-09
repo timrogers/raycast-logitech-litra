@@ -1,8 +1,7 @@
 import fs from "fs";
 import { promisify } from "util";
 import { exec as defaultExec } from "child_process";
-import gte from "semver/functions/gte";
-import parse from "semver/functions/parse";
+import { gte, parse } from "semver";
 import { Device } from "./types";
 const exec = promisify(defaultExec);
 
