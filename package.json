@@ -42,7 +42,7 @@
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.83.2",
+    "@raycast/api": "^1.87.4",
     "semver": "^7.6.3"
   },
   "devDependencies": {
