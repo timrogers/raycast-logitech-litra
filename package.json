@@ -46,7 +46,7 @@
     "semver": "^7.6.3"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.17.0",
     "@types/node": "^22.13.10",
     "@types/react": "^18.3.3",
