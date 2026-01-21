@@ -16,8 +16,8 @@ const joinWordsWithCommasThenOr = (words: string[]): string => {
   }
 };
 
-const MINIMUM_SUPPORTED_LITRA_VERSION = "3.0.0";
-const SUPPORTED_MAJOR_LITRA_VERSIONS = [3];
+const MINIMUM_SUPPORTED_LITRA_VERSION = "2.4.0";
+const SUPPORTED_MAJOR_LITRA_VERSIONS = [2, 3];
 const ALLOWED_MAJOR_VERSIONS_STRING = joinWordsWithCommasThenOr(
   SUPPORTED_MAJOR_LITRA_VERSIONS.map((majorVersion) => `v${majorVersion}.x`),
 );
@@ -39,11 +39,41 @@ export const checkLitraVersion = async (binaryPath: string): Promise<void> => {
   }
 };
 
-const getLitraVersion = async (binaryPath: string): Promise<string> => {
+export const getLitraVersion = async (binaryPath: string): Promise<string> => {
   const { stdout: version } = await runLitraCommand(binaryPath, undefined, "--version");
   // The CLI returns an output like this:
   // > litra 0.1.0
   return version.trim().split(" ")[1];
+};
+
+export const isVersionV2 = (version: string): boolean => {
+  const parsedVersion = parse(version);
+  return parsedVersion?.major === 2;
+};
+
+// Normalize v2 device response to v3 format for backward compatibility
+const normalizeDeviceV2ToV3 = (deviceV2: any): Device => {
+  return {
+    device_type: deviceV2.device_type.toLowerCase().replace(/\s+/g, "_").replace("litra_", ""),
+    device_type_display: deviceV2.device_type,
+    has_back_side: false,
+    serial_number: deviceV2.serial_number,
+    device_path: deviceV2.device_path,
+    status_display: deviceV2.status,
+    brightness_display: deviceV2.brightness_display,
+    temperature_display: deviceV2.temperature_display,
+    back_status_display: "N/A",
+    back_brightness_display: "N/A",
+    is_on: deviceV2.is_on,
+    brightness_in_lumen: deviceV2.brightness_in_lumen,
+    temperature_in_kelvin: deviceV2.temperature_in_kelvin,
+    minimum_brightness_in_lumen: deviceV2.minimum_brightness_in_lumen,
+    maximum_brightness_in_lumen: deviceV2.maximum_brightness_in_lumen,
+    minimum_temperature_in_kelvin: deviceV2.minimum_temperature_in_kelvin,
+    maximum_temperature_in_kelvin: deviceV2.maximum_temperature_in_kelvin,
+    is_back_on: null,
+    back_brightness_percentage: null,
+  };
 };
 
 const runLitraCommand = (
@@ -63,8 +93,17 @@ const runLitraCommand = (
 };
 
 export const getDevices = async (binaryPath: string): Promise<Device[]> => {
+  const version = await getLitraVersion(binaryPath);
   const { stdout } = await runLitraCommand(binaryPath, "devices", "--json");
-  return JSON.parse(stdout) as Device[];
+  const rawDevices = JSON.parse(stdout);
+
+  // If v2, normalize the response to v3 format
+  if (isVersionV2(version)) {
+    return rawDevices.map(normalizeDeviceV2ToV3);
+  }
+
+  // v3 already has the correct format
+  return rawDevices as Device[];
 };
 
 export const isOn = async (devicePath: string, binaryPath: string): Promise<boolean> => {

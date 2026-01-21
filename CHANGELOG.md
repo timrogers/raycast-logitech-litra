@@ -2,14 +2,13 @@
 
 ## [Add support for back light control on Litra Beam LX] - 2025-01-21
 
-- **BREAKING CHANGE**: Require at least v3.0.0 of the [`litra` CLI](https://github.com/timrogers/litra-rs)
-- **BREAKING CHANGE**: Only v3.x of the `litra` CLI is now supported (v2.x is no longer supported)
-- Add support for controlling the colorful back light on Litra Beam LX devices:
+- Add support for controlling the colorful back light on Litra Beam LX devices (requires v3.x):
   - Toggle the back light on and off
   - Set the back light brightness using presets
   - Change the back light color (white, red, green, blue, yellow, cyan, magenta)
-- The extension UI now shows back light status for Litra Beam LX devices
-- Update to use the new JSON structure from `litra devices --json` (v3.0.0+)
+- The extension UI now shows back light status for Litra Beam LX devices when using v3.x
+- Continue to support both v2.x and v3.x of the `litra` CLI (v2.4.0+)
+- Automatically detect CLI version and normalize v2 responses to v3 format for backward compatibility
 
 ## [Add support for Litra devices which don't expose a serial number] - 2025-08-24
 
