@@ -29,7 +29,7 @@ export default function Command() {
     const mainStatus = `${statusIcon} ${device.brightness_in_lumen} lm / ${device.temperature_in_kelvin} K`;
     
     let backLightStatus = "";
-    if (device.has_back_side && device.is_back_on !== null) {
+    if (device.has_back_side && device.is_back_on !== null && device.back_brightness_percentage !== null) {
       const backIcon = device.is_back_on ? "🌈 On" : "🌈🚫 Off";
       backLightStatus = ` | Back: ${backIcon} ${device.back_brightness_percentage}%`;
     }
