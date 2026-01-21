@@ -1,4 +1,4 @@
-import { ActionPanel, Action, Icon, List, showToast, Toast } from "@raycast/api";
+import { ActionPanel, Action, Icon, List, showToast, Toast, open } from "@raycast/api";
 import React, { useEffect, useState } from "react";
 import { getLitraBinaryPath } from "./preferences";
 import {
@@ -17,6 +17,7 @@ import {
 import { getEnabledTemperaturePresets } from "./temperature-presets";
 import { getEnabledBrightnessPresets } from "./brightness-presets";
 import { Device } from "./types";
+import { shouldShowUpgradeNotification, recordUpgradeNotificationShown } from "./upgrade-notification";
 
 export default function Command() {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -46,12 +47,35 @@ export default function Command() {
 
     // Check if using v2
     const version = await getLitraVersion(litraBinaryPath);
-    setIsV2(isVersionV2(version));
+    const isV2Version = isVersionV2(version);
+    setIsV2(isV2Version);
 
     if (!isLoading) setIsLoading(true);
     const devices = await getDevices(litraBinaryPath);
     setDevices(devices);
     setIsLoading(false);
+
+    // Check if we should show upgrade notification
+    if (isV2Version) {
+      const hasBeamLXDevice = devices.some((device) => device.has_back_side);
+      if (hasBeamLXDevice) {
+        const shouldShow = await shouldShowUpgradeNotification();
+        if (shouldShow) {
+          await showToast({
+            style: Toast.Style.Animated,
+            title: "Upgrade Available",
+            message: "Upgrade to litra CLI v3.x to control your Beam LX back light",
+            primaryAction: {
+              title: "Learn More",
+              onAction: () => {
+                open("https://github.com/timrogers/litra-rs/releases");
+              },
+            },
+          });
+          await recordUpgradeNotificationShown();
+        }
+      }
+    }
   };
 
   useEffect(() => {
