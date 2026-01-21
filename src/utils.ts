@@ -109,10 +109,6 @@ export const setBackBrightnessPercentage = async (
   );
 };
 
-export const setBackColor = async (
-  devicePath: string,
-  color: string,
-  binaryPath: string,
-): Promise<void> => {
+export const setBackColor = async (devicePath: string, color: string, binaryPath: string): Promise<void> => {
   await runLitraCommand(binaryPath, "back-color", `--color ${color} --device-path ${devicePath}`);
 };

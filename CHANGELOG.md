@@ -2,8 +2,8 @@
 
 ## [Add support for back light control on Litra Beam LX] - 2025-01-21
 
-- __BREAKING CHANGE__: Require at least v3.0.0 of the [`litra` CLI](https://github.com/timrogers/litra-rs)
-- __BREAKING CHANGE__: Only v3.x of the `litra` CLI is now supported (v2.x is no longer supported)
+- **BREAKING CHANGE**: Require at least v3.0.0 of the [`litra` CLI](https://github.com/timrogers/litra-rs)
+- **BREAKING CHANGE**: Only v3.x of the `litra` CLI is now supported (v2.x is no longer supported)
 - Add support for controlling the colorful back light on Litra Beam LX devices:
   - Toggle the back light on and off
   - Set the back light brightness using presets
@@ -13,7 +13,7 @@
 
 ## [Add support for Litra devices which don't expose a serial number] - 2025-08-24
 
-- __BREAKING CHANGE__: Require at least v2.4.0 of the [`litra` CLI](https://github.com/timrogers/litra-rs)
+- **BREAKING CHANGE**: Require at least v2.4.0 of the [`litra` CLI](https://github.com/timrogers/litra-rs)
 - Target Litra devices based on their device path rather than their serial number, to handle some devices which don't expose a serial number (fixes https://github.com/raycast/extensions/issues/20332)
 
 ## [Allow `v1.x` of the `litra` CLI] - 2024-04-25
@@ -28,7 +28,7 @@
 
 ## [Switch to using the new and more reliable `litra` CLI under the hood] - 2024-01-15
 
-- __BREAKING CHANGE__: The extension now uses a [new `litra` CLI](https://github.com/timrogers/litra-rs), built in Rust, under the hood. No more painful problems with Node and npm! 🙏
+- **BREAKING CHANGE**: The extension now uses a [new `litra` CLI](https://github.com/timrogers/litra-rs), built in Rust, under the hood. No more painful problems with Node and npm! 🙏
 - Logitech Litra Beam LX devices are now supported, as well as the Litra Glow and Litra Beam ✨
 
 ## [Improve the UX when no Litra devices are found] - 2023-05-18

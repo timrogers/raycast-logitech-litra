@@ -4,11 +4,11 @@ This [Raycast](https://www.raycast.com/) extension allows you to manage your USB
 
 ![Screenshot](screenshot.png?raw=true)
 
-*Note*: This will not work with Logitech Litra Beam devices connected using Bluetooth.
+_Note_: This will not work with Logitech Litra Beam devices connected using Bluetooth.
 
 ## Installation
 
-To use this extension, as well as downloading the extension from the Raycast Store, you must also set up the [`litra` command line](https://github.com/timrogers/litra-rs) on your machine by following the instructions in the readme. 
+To use this extension, as well as downloading the extension from the Raycast Store, you must also set up the [`litra` command line](https://github.com/timrogers/litra-rs) on your machine by following the instructions in the readme.
 
 You must be running at least `v3.0.0` of `litra`, and only `v3.x` versions are supported.
 

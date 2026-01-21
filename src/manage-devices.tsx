@@ -27,13 +27,13 @@ export default function Command() {
   const getDeviceSubtitle = (device: Device): string => {
     const statusIcon = device.is_on ? "💡" : "💡🚫";
     const mainStatus = `${statusIcon} ${device.brightness_in_lumen} lm / ${device.temperature_in_kelvin} K`;
-    
+
     let backLightStatus = "";
     if (device.has_back_side && device.is_back_on !== null && device.back_brightness_percentage !== null) {
       const backIcon = device.is_back_on ? "🌈 On" : "🌈🚫 Off";
       backLightStatus = ` | Back: ${backIcon} ${device.back_brightness_percentage}%`;
     }
-    
+
     const identifier = device.serial_number || device.device_path;
     return `${mainStatus}${backLightStatus} (${identifier})`;
   };
@@ -83,9 +83,15 @@ export default function Command() {
                       const isDeviceOn = await isOn(device.device_path, litraBinaryPath);
 
                       if (isDeviceOn) {
-                        await showToast({ title: `Turned on ${device.device_type_display}`, style: Toast.Style.Success });
+                        await showToast({
+                          title: `Turned on ${device.device_type_display}`,
+                          style: Toast.Style.Success,
+                        });
                       } else {
-                        await showToast({ title: `Turned off ${device.device_type_display}`, style: Toast.Style.Success });
+                        await showToast({
+                          title: `Turned off ${device.device_type_display}`,
+                          style: Toast.Style.Success,
+                        });
                       }
 
                       refreshDevices();
