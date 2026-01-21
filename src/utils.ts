@@ -16,8 +16,8 @@ const joinWordsWithCommasThenOr = (words: string[]): string => {
   }
 };
 
-const MINIMUM_SUPPORTED_LITRA_VERSION = "2.4.0";
-const SUPPORTED_MAJOR_LITRA_VERSIONS = [2];
+const MINIMUM_SUPPORTED_LITRA_VERSION = "3.0.0";
+const SUPPORTED_MAJOR_LITRA_VERSIONS = [3];
 const ALLOWED_MAJOR_VERSIONS_STRING = joinWordsWithCommasThenOr(
   SUPPORTED_MAJOR_LITRA_VERSIONS.map((majorVersion) => `v${majorVersion}.x`),
 );
@@ -91,4 +91,28 @@ export const setBrightnessPercentage = async (
   binaryPath: string,
 ): Promise<void> => {
   await runLitraCommand(binaryPath, "brightness", `--percentage ${brightnessPercentage} --device-path ${devicePath}`);
+};
+
+export const toggleBack = async (devicePath: string, binaryPath: string): Promise<void> => {
+  await runLitraCommand(binaryPath, "back-toggle", `--device-path ${devicePath}`);
+};
+
+export const setBackBrightnessPercentage = async (
+  devicePath: string,
+  brightnessPercentage: number,
+  binaryPath: string,
+): Promise<void> => {
+  await runLitraCommand(
+    binaryPath,
+    "back-brightness",
+    `--percentage ${brightnessPercentage} --device-path ${devicePath}`,
+  );
+};
+
+export const setBackColor = async (
+  devicePath: string,
+  color: string,
+  binaryPath: string,
+): Promise<void> => {
+  await runLitraCommand(binaryPath, "back-color", `--color ${color} --device-path ${devicePath}`);
 };

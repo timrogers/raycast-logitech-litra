@@ -1,7 +1,17 @@
 import { ActionPanel, Action, Icon, List, showToast, Toast } from "@raycast/api";
 import React, { useEffect, useState } from "react";
 import { getLitraBinaryPath } from "./preferences";
-import { getDevices, toggle, isOn, setTemperatureInKelvin, setBrightnessPercentage, checkLitraVersion } from "./utils";
+import {
+  getDevices,
+  toggle,
+  isOn,
+  setTemperatureInKelvin,
+  setBrightnessPercentage,
+  checkLitraVersion,
+  toggleBack,
+  setBackBrightnessPercentage,
+  setBackColor,
+} from "./utils";
 import { getEnabledTemperaturePresets } from "./temperature-presets";
 import { getEnabledBrightnessPresets } from "./brightness-presets";
 import { Device } from "./types";
@@ -47,10 +57,10 @@ export default function Command() {
         ? devices.map((device) => (
             <List.Item
               key={device.device_path}
-              title={device.device_type}
+              title={device.device_type_display}
               subtitle={`${device.is_on ? "💡" : "💡🚫"} ${device.brightness_in_lumen} lm / ${
                 device.temperature_in_kelvin
-              } K (${device.serial_number || device.device_path})`}
+              } K${device.has_back_side && device.is_back_on !== null ? ` | Back: ${device.is_back_on ? "🌈 On" : "🌈🚫 Off"} ${device.back_brightness_percentage}%` : ""} (${device.serial_number || device.device_path})`}
               actions={
                 <ActionPanel>
                   <Action
@@ -61,9 +71,9 @@ export default function Command() {
                       const isDeviceOn = await isOn(device.device_path, litraBinaryPath);
 
                       if (isDeviceOn) {
-                        await showToast({ title: `Turned on ${device.device_type}`, style: Toast.Style.Success });
+                        await showToast({ title: `Turned on ${device.device_type_display}`, style: Toast.Style.Success });
                       } else {
-                        await showToast({ title: `Turned off ${device.device_type}`, style: Toast.Style.Success });
+                        await showToast({ title: `Turned off ${device.device_type_display}`, style: Toast.Style.Success });
                       }
 
                       refreshDevices();
@@ -77,7 +87,7 @@ export default function Command() {
                       onAction={async () => {
                         await setTemperatureInKelvin(device.device_path, temperature, litraBinaryPath);
                         await showToast({
-                          title: `Set ${device.device_type}'s temperature to ${temperature}K`,
+                          title: `Set ${device.device_type_display}'s temperature to ${temperature}K`,
                           style: Toast.Style.Success,
                         });
 
@@ -93,7 +103,7 @@ export default function Command() {
                       onAction={async () => {
                         await setBrightnessPercentage(device.device_path, brightness, litraBinaryPath);
                         await showToast({
-                          title: `Set ${device.device_type}'s brightness to ${brightness}%`,
+                          title: `Set ${device.device_type_display}'s brightness to ${brightness}%`,
                           style: Toast.Style.Success,
                         });
 
@@ -101,6 +111,55 @@ export default function Command() {
                       }}
                     />
                   ))}
+                  {device.has_back_side && (
+                    <>
+                      <Action
+                        title="Toggle Back Light"
+                        icon={Icon.Stars}
+                        onAction={async () => {
+                          await toggleBack(device.device_path, litraBinaryPath);
+                          await showToast({
+                            title: `Toggled ${device.device_type_display}'s back light`,
+                            style: Toast.Style.Success,
+                          });
+
+                          refreshDevices();
+                        }}
+                      />
+                      {Array.from(enabledBrightnessPresets).map((brightness) => (
+                        <Action
+                          key={`back-${brightness}`}
+                          title={`Set Back Light Brightness to ${brightness}%`}
+                          icon={Icon.CircleProgress100}
+                          onAction={async () => {
+                            await setBackBrightnessPercentage(device.device_path, brightness, litraBinaryPath);
+                            await showToast({
+                              title: `Set ${device.device_type_display}'s back light brightness to ${brightness}%`,
+                              style: Toast.Style.Success,
+                            });
+
+                            refreshDevices();
+                          }}
+                        />
+                      ))}
+                      {["white", "red", "green", "blue", "yellow", "cyan", "magenta"].map((color) => (
+                        <Action
+                          key={`color-${color}`}
+                          title={`Set Back Light Color to ${color.charAt(0).toUpperCase() + color.slice(1)}`}
+                          icon={Icon.Brush}
+                          onAction={async () => {
+                            await setBackColor(device.device_path, color, litraBinaryPath);
+                            await showToast({
+                              title: `Set ${device.device_type_display}'s back light color to ${color}`,
+                              style: Toast.Style.Success,
+                            });
+
+                            refreshDevices();
+                          }}
+                        />
+                      ))}
+                    </>
+                  )}
                 </ActionPanel>
               }
             />
