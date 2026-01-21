@@ -11,6 +11,8 @@ import {
   toggleBack,
   setBackBrightnessPercentage,
   setBackColor,
+  getLitraVersion,
+  isVersionV2,
 } from "./utils";
 import { getEnabledTemperaturePresets } from "./temperature-presets";
 import { getEnabledBrightnessPresets } from "./brightness-presets";
@@ -21,6 +23,7 @@ export default function Command() {
   const [devices, setDevices] = useState<Device[]>([]);
   const [enabledTemperaturePresets, setEnabledTemperaturePresets] = useState<Set<number>>(new Set());
   const [enabledBrightnessPresets, setEnabledBrightnessPresets] = useState<Set<number>>(new Set());
+  const [isV2, setIsV2] = useState<boolean>(false);
 
   const litraBinaryPath = getLitraBinaryPath();
 
@@ -40,6 +43,10 @@ export default function Command() {
 
   const refreshDevices = async () => {
     await checkLitraVersion(litraBinaryPath);
+
+    // Check if using v2
+    const version = await getLitraVersion(litraBinaryPath);
+    setIsV2(isVersionV2(version));
 
     if (!isLoading) setIsLoading(true);
     const devices = await getDevices(litraBinaryPath);
@@ -129,7 +136,7 @@ export default function Command() {
                       }}
                     />
                   ))}
-                  {device.has_back_side && (
+                  {device.has_back_side && !isV2 && (
                     <>
                       <Action
                         title="Toggle Back Light"

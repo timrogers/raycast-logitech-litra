@@ -10,6 +10,6 @@ _Note_: This will not work with Logitech Litra Beam devices connected using Blue
 
 To use this extension, as well as downloading the extension from the Raycast Store, you must also set up the [`litra` command line](https://github.com/timrogers/litra-rs) on your machine by following the instructions in the readme.
 
-You must be running at least `v3.0.0` of `litra`, and only `v3.x` versions are supported.
+You must be running at least `v2.4.0` of `litra`. Both `v2.x` and `v3.x` versions are supported. Note that back light control for Litra Beam LX devices is only available in `v3.x`.
 
 When you run the extension for the first time, you'll be prompted to configure the path of your `litra` binary. You can get this after installation by running `which litra` in a shell.
