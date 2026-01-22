@@ -28,18 +28,16 @@ export default function Command() {
 
   const litraBinaryPath = getLitraBinaryPath();
 
-  const getDeviceSubtitle = (device: Device): string => {
-    const statusIcon = device.is_on ? "💡" : "💡🚫";
-    const mainStatus = `${statusIcon} ${device.brightness_in_lumen} lm / ${device.temperature_in_kelvin} K`;
+  const getDeviceAccessories = (device: Device): List.Item.Accessory[] => {
+    const frontStatus = device.is_on ? "On" : "Off";
+    const frontText = `${frontStatus} / ${device.brightness_in_lumen}lm / ${device.temperature_in_kelvin}K`;
 
-    let backLightStatus = "";
     if (device.has_back_side && device.is_back_on !== null && device.back_brightness_percentage !== null) {
-      const backIcon = device.is_back_on ? "🌈 On" : "🌈🚫 Off";
-      backLightStatus = ` | Back: ${backIcon} ${device.back_brightness_percentage}%`;
+      const backStatus = device.is_back_on ? "On" : "Off";
+      return [{ tag: `Front: ${frontText}` }, { tag: `Back: ${backStatus} / ${device.back_brightness_percentage}%` }];
     }
 
-    const identifier = device.serial_number || device.device_path;
-    return `${mainStatus}${backLightStatus} (${identifier})`;
+    return [{ tag: frontText }];
   };
 
   const refreshDevices = async () => {
@@ -103,7 +101,7 @@ export default function Command() {
             <List.Item
               key={device.device_path}
               title={device.device_type_display}
-              subtitle={getDeviceSubtitle(device)}
+              accessories={getDeviceAccessories(device)}
               actions={
                 <ActionPanel>
                   <Action
