@@ -2,7 +2,7 @@ import fs from "fs";
 import { promisify } from "util";
 import { exec as defaultExec } from "child_process";
 import { gte, parse } from "semver";
-import { Device } from "./types";
+import { Device, DeviceV2 } from "./types";
 const exec = promisify(defaultExec);
 
 const joinWordsWithCommasThenOr = (words: string[]): string => {
@@ -59,7 +59,7 @@ export const isVersionV2 = (version: string): boolean => {
 };
 
 // Normalize v2 device response to v3 format for backward compatibility
-const normalizeDeviceV2ToV3 = (deviceV2: any): Device => {
+const normalizeDeviceV2ToV3 = (deviceV2: DeviceV2): Device => {
   const isBeamLX = deviceV2.device_type.toLowerCase().includes("beam lx");
   return {
     device_type: deviceV2.device_type.toLowerCase().replace(/\s+/g, "_").replace("litra_", ""),
