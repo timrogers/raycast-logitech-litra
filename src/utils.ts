@@ -60,10 +60,11 @@ export const isVersionV2 = (version: string): boolean => {
 
 // Normalize v2 device response to v3 format for backward compatibility
 const normalizeDeviceV2ToV3 = (deviceV2: any): Device => {
+  const isBeamLX = deviceV2.device_type.toLowerCase().includes("beam lx");
   return {
     device_type: deviceV2.device_type.toLowerCase().replace(/\s+/g, "_").replace("litra_", ""),
     device_type_display: deviceV2.device_type,
-    has_back_side: false,
+    has_back_side: isBeamLX,
     serial_number: deviceV2.serial_number,
     device_path: deviceV2.device_path,
     status_display: deviceV2.status,
