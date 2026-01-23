@@ -1,5 +1,5 @@
 // V2 API response (litra CLI v2.x)
-interface DeviceV2 {
+export interface DeviceV2 {
   device_type: string;
   serial_number: string;
   device_path: string;
@@ -16,7 +16,7 @@ interface DeviceV2 {
 }
 
 // V3 API response (litra CLI v3.x)
-interface DeviceV3 {
+export interface DeviceV3 {
   device_type: string;
   device_type_display: string;
   has_back_side: boolean;
