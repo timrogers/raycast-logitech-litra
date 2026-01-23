@@ -18,6 +18,7 @@ const joinWordsWithCommasThenOr = (words: string[]): string => {
 
 const MINIMUM_SUPPORTED_LITRA_VERSION = "2.4.0";
 const SUPPORTED_MAJOR_LITRA_VERSIONS = [2, 3];
+const BLOCKED_LITRA_VERSIONS = ["3.0.0", "3.1.0"];
 const ALLOWED_MAJOR_VERSIONS_STRING = joinWordsWithCommasThenOr(
   SUPPORTED_MAJOR_LITRA_VERSIONS.map((majorVersion) => `v${majorVersion}.x`),
 );
@@ -28,6 +29,12 @@ export const checkLitraVersion = async (binaryPath: string): Promise<void> => {
 
   if (!parsedVersion) {
     throw `The version of the \`litra\` CLI could not be detected. Please check the extension's preferences, and make sure that you're pointing to the \`litra\` CLI`;
+  }
+
+  if (BLOCKED_LITRA_VERSIONS.includes(version)) {
+    throw new Error(
+      `You are running v${version} of the \`litra\` CLI which has known issues. Please upgrade to a newer version by following the instructions at https://github.com/timrogers/litra-rs.`,
+    );
   }
 
   if (gte(version, MINIMUM_SUPPORTED_LITRA_VERSION)) {
